@@ -1,4 +1,4 @@
-import 'package:chat_app_test/pages/home_page.dart';
+import 'package:chat_app_test/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
