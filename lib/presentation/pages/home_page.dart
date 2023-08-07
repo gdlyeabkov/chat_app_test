@@ -1,7 +1,8 @@
+import 'package:chat_app_test/data/cubit/app_cubit.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+  const MyHomePage({super.key, required AppCubit appCubit});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
