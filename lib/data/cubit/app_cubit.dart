@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:chat_app_test/data/constants/hosts.dart';
 import 'package:chat_app_test/data/models/chat.dart';
+import 'package:chat_app_test/data/models/msg.dart';
 import 'package:chat_app_test/data/utils/mocks.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,5 +51,44 @@ class AppCubit extends Cubit<AppState> {
         ));
       }
     }
+  }
+
+
+  void addMsg(String content, String type, String dateTime) {
+    final selectedChat = state.selectedChat;
+    final chat = Chat(
+        id: selectedChat.id,
+        title: selectedChat.title,
+        subtitle: selectedChat.subtitle,
+        dateTime: selectedChat.dateTime,
+        photo: selectedChat.photo,
+        service: selectedChat.service,
+        isOpen: selectedChat.isOpen,
+        msgs: [
+          ...selectedChat.msgs,
+          Msg(
+            id: -1,
+            content: content,
+            type: type,
+            dateTime: dateTime,
+          ),
+        ]);
+    List<Chat> chats = [];
+    for (Chat c in state.chats) {
+      if (c.id == chat.id)
+        chats = [
+          ...chats,
+          chat,
+        ];
+      else
+        chats = [
+          ...chats,
+          c,
+        ];
+    }
+    emit(state.copyWith(
+      selectedChat: chat,
+      chats: chats,
+    ));
   }
 }
