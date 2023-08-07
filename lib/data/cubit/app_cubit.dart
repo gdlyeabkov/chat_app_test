@@ -155,4 +155,11 @@ class AppCubit extends Cubit<AppState> {
     return String.fromCharCodes(Iterable.generate(
         length, (_) => chars.codeUnitAt(rnd.nextInt(chars.length))));
   }
+
+  sendMsg(String content) {
+    var now = new DateTime.now();
+    var formatter = new DateFormat(Patterns.DATE_TIME_PATTERN);
+    String formattedDate = formatter.format(now);
+    addMsg(content, 'outcome', formattedDate);
+  }
 }
