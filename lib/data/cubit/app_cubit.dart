@@ -5,6 +5,7 @@ import 'package:chat_app_test/data/constants/hosts.dart';
 import 'package:chat_app_test/data/constants/patterns.dart';
 import 'package:chat_app_test/data/models/chat.dart';
 import 'package:chat_app_test/data/models/msg.dart';
+import 'package:chat_app_test/data/models/serialization.dart';
 import 'package:chat_app_test/data/utils/mocks.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -161,5 +162,20 @@ class AppCubit extends Cubit<AppState> {
     var formatter = new DateFormat(Patterns.DATE_TIME_PATTERN);
     String formattedDate = formatter.format(now);
     addMsg(content, 'outcome', formattedDate);
+  }
+
+  saveData() {
+    Data data = Data(chats: state.chats);
+    String jsonString = '';
+    try {
+      final jsonData = data.toJson();
+      jsonString = jsonEncode(jsonData);
+    } catch (e) {
+      print('Error encoding data: $e');
+    }
+    final isHaveData = jsonString != null;
+    if (isHaveData) {
+      window.localStorage['data'] = jsonString;
+    }
   }
 }
