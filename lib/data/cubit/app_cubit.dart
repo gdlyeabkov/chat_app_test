@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 import 'package:chat_app_test/data/constants/hosts.dart';
+import 'package:chat_app_test/data/constants/patterns.dart';
 import 'package:chat_app_test/data/models/chat.dart';
 import 'package:chat_app_test/data/models/msg.dart';
 import 'package:chat_app_test/data/utils/mocks.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:universal_html/html.dart';
 
 part 'app_state.dart';
@@ -115,5 +118,41 @@ class AppCubit extends Cubit<AppState> {
         selectedChat: state.chats[index],
       ),
     );
+  }
+
+  selectChat(id) {
+    var chat = state.chats.where((element) => element.id == id).first;
+    emit(state.copyWith(
+      selectedChat: chat,
+    ));
+    if (state.timer != null) state.timer?.cancel();
+    List<String> values = [
+      'income',
+      'outcome',
+    ];
+    final timer = Timer.periodic(Duration(seconds: 3), (Timer t) {
+      var random = new Random();
+      var index = random.nextInt(values.length);
+      String randomValue = values[index];
+      random = new Random();
+      var length = random.nextInt(50) + 1;
+      var content = generateRandomContent(length);
+      var now = new DateTime.now();
+      var formatter = new DateFormat(Patterns.DATE_TIME_PATTERN);
+      String formattedDate = formatter.format(now);
+      addMsg(content, randomValue, formattedDate);
+    });
+    emit(
+      state.copyWith(
+        timer: timer,
+      ),
+    );
+  }
+
+  String generateRandomContent(length) {
+    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    Random rnd = new Random();
+    return String.fromCharCodes(Iterable.generate(
+        length, (_) => chars.codeUnitAt(rnd.nextInt(chars.length))));
   }
 }
