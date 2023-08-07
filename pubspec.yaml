@@ -98,3 +98,19 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+
+  assets:
+    - 'assets/images/sofia_makarova.png'
+    - 'assets/images/andrey_muratov.png'
+    - 'assets/images/kishlack_ahbekaev.png'
+    - 'assets/images/olesya_klunskaya.png'
+    - 'assets/images/edgar_faev.png'
+    - 'assets/images/christina_ganova.png'
+    - 'assets/images/background.png'
+    - 'assets/images/avatar.png'
+    - 'assets/vector/whats_app.svg'
+    - 'assets/vector/vk.svg'
+    - 'assets/vector/avito.svg'
+    - 'assets/vector/background.svg'
+    - 'assets/vector/double_check.svg'
