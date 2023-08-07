@@ -91,4 +91,29 @@ class AppCubit extends Cubit<AppState> {
       chats: chats,
     ));
   }
+
+  void toggleAccess() {
+    final selectedChat = state.selectedChat;
+    final selectedChatId = selectedChat.id;
+    int index = state.chats.indexWhere((chat) {
+      int chatId = chat.id;
+      final isSelectedChat = chatId == selectedChatId;
+      return isSelectedChat;
+    });
+    var val = !selectedChat.isOpen;
+    state.chats[index] = Chat(
+      id: selectedChat.id,
+      title: selectedChat.title,
+      subtitle: selectedChat.subtitle,
+      dateTime: selectedChat.dateTime,
+      photo: selectedChat.photo,
+      service: selectedChat.service,
+      isOpen: val,
+      msgs: selectedChat.msgs,);
+    emit(
+      state.copyWith(
+        selectedChat: state.chats[index],
+      ),
+    );
+  }
 }
